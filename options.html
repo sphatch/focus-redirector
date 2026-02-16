@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Focus Redirector Options</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #0f766e;
+      --danger: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: radial-gradient(circle at top right, #e6fffb 0%, var(--bg) 45%);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    .header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfdff;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 18px 24px 24px;
+    }
+
+    .add-form {
+      display: grid;
+      grid-template-columns: 1fr 1.7fr auto;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="text"], input[type="url"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+    }
+
+    input:focus {
+      outline: 2px solid rgba(15, 118, 110, 0.25);
+      outline-offset: 1px;
+      border-color: var(--accent);
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #fff;
+      align-self: end;
+    }
+
+    .danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .message {
+      min-height: 20px;
+      font-size: 13px;
+    }
+
+    .metrics {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: #0f172a;
+    }
+
+    .message.error {
+      color: var(--danger);
+    }
+
+    .message.success {
+      color: #0f766e;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #334155;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .row-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+
+    .row-error {
+      color: var(--danger);
+      font-size: 12px;
+      min-height: 16px;
+    }
+
+    .enabled-cell {
+      width: 80px;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 14px 10px;
+    }
+
+    @media (max-width: 820px) {
+      .add-form {
+        grid-template-columns: 1fr;
+      }
+
+      .primary {
+        width: 100%;
+      }
+
+      table, thead, tbody, tr, th, td {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        border-bottom: 1px solid var(--border);
+        padding: 10px 8px;
+      }
+
+      td {
+        border-bottom: 0;
+        padding: 8px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Focus Redirect Rules</h1>
+      <p>Redirect top-level page visits from a specific hostname to another URL.</p>
+    </div>
+
+    <div class="section">
+      <form id="addRuleForm" class="add-form">
+        <div class="field">
+          <label for="newSourceHostname">Source hostname</label>
+          <input id="newSourceHostname" type="text" placeholder="youtube.com" required />
+        </div>
+        <div class="field">
+          <label for="newTargetUrl">Target URL</label>
+          <input id="newTargetUrl" type="url" placeholder="https://calendar.google.com/calendar/u/0/r" required />
+        </div>
+        <button type="submit" class="primary">Add Rule</button>
+      </form>
+
+      <div id="formMessage" class="message" aria-live="polite"></div>
+      <div id="metricsSummary" class="metrics" aria-live="polite">Total redirects: 0</div>
+
+      <table aria-label="Redirect Rules">
+        <thead>
+          <tr>
+            <th class="enabled-cell">Enabled</th>
+            <th>Source hostname</th>
+            <th>Target URL</th>
+            <th>Redirects</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rulesBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <template id="ruleRowTemplate">
+    <tr>
+      <td class="enabled-cell">
+        <input type="checkbox" class="rule-enabled" aria-label="Enable rule" />
+      </td>
+      <td>
+        <div class="row-field">
+          <input type="text" class="rule-source" placeholder="youtube.com" />
+          <div class="row-error rule-source-error" aria-live="polite"></div>
+        </div>
+      </td>
+      <td>
+        <div class="row-field">
+          <input type="url" class="rule-target" placeholder="https://calendar.google.com/calendar/u/0/r" />
+          <div class="row-error rule-target-error" aria-live="polite"></div>
+        </div>
+      </td>
+      <td>
+        <span class="rule-redirect-count">0</span>
+      </td>
+      <td>
+        <button type="button" class="danger rule-delete">Delete</button>
+      </td>
+    </tr>
+  </template>
+
+  <script src="options.js"></script>
+</body>
+</html>

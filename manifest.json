@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Redirector",
+  "version": "1.0.0",
+  "description": "Redirect distracting websites to user-defined targets based on hostname rules.",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "action": {
+    "default_title": "Open Focus Redirector Options"
+  },
+  "options_page": "options.html"
+}
