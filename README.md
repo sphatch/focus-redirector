@@ -39,7 +39,7 @@ This ensures redirects only happen when the browser is actually navigating to th
 1. Open Chrome and go to `chrome://extensions`.
 2. Turn on **Developer mode**.
 3. Click **Load unpacked**.
-4. Select this folder: `/Users/spencer/Documents/New project`.
+4. Select this folder: `./focus-redirector`.
 5. Click the extension toolbar icon to open **Focus Redirector Options** directly.
 
 ## Usage
